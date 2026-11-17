@@ -821,8 +821,3 @@ data_tests:
 | `dispatch` | list of dicts | root project first | Macro search order |
 | `on-run-start` / `on-run-end` | string / list | none | Project-level hooks |
 | `dbt-cloud` | dict | — | Link to dbt platform project |
-
-### Study notes / what to read next
-
-- **Next section suggestion:** *Resource configs and properties* (how `models:`, `seeds:`, `snapshots:`, `data_tests:` blocks and the `+` prefix cascade by folder), then **Platform-specific configs**, then **Commands**.
-- Related reference pages worth bookmarking: `profiles.yml`, global configs (`flags:`), hooks & operations, packages, `dbt clean`, `dbt deps`.
