@@ -795,29 +795,29 @@ data_tests:
 
 ## 11. Cheat sheet
 
-| Key | Type | Default | One-line purpose |
+| Key | Type | Default | Purpose |
 |---|---|---|---|
-| `name` | string | — (required) | Project name (snake_case) |
-| `version` | string | `None` | Project version (optional ≥ 1.5) |
-| `config-version` | int | `2` | YAML structure version |
-| `profile` | string | — | Which `profiles.yml` profile to use |
-| `model-paths` | list | `["models"]` | Models, sources, unit tests |
-| `seed-paths` | list | `["seeds"]` | Seed CSVs |
-| `test-paths` | list | `["tests"]` | Singular & custom generic tests |
-| `analysis-paths` | list | none (init sets `analyses`) | Analyses |
-| `macro-paths` | list | `["macros"]` | Macros |
-| `snapshot-paths` | list | `["snapshots"]` | Snapshots |
-| `docs-paths` | list | all resource paths | Docs blocks |
-| `asset-paths` | list | `[]` | Files copied to `target/` for docs |
-| `function-paths` | list | `["functions"]` | UDFs |
-| `osi-paths` | list | `["OSI"]` | Ossie semantic docs (≥ v1.12) |
-| `check-paths` | list | `["checks"]` | Checks (dbt v2) |
-| `skill-paths` | list | `["skills"]` | Agent skills |
-| `packages-install-path` | string | `dbt_packages` | Where `dbt deps` installs |
-| `clean-targets` | list | `target-path` contents | What `dbt clean` deletes |
-| `query-comment` | string / dict | JSON metadata comment | Comment added to every query |
-| `quoting` | dict | adapter-dependent | Quote database/schema/identifier names |
-| `require-dbt-version` | string / list | none (no check) | Allowed dbt versions |
-| `dispatch` | list of dicts | root project first | Macro search order |
-| `on-run-start` / `on-run-end` | string / list | none | Project-level hooks |
-| `dbt-cloud` | dict | — | Link to dbt platform project |
+| `name` | string | — (required) | Gives the project its identity. Also the key you use under `models:`, `seeds:` etc. to target your own project's resources. Letters, digits, underscores only. |
+| `version` | string | `None` | Records your project's own version (semantic version like `1.0.0`). Optional from dbt 1.5; mostly informational. |
+| `config-version` | int | `2` | Tells dbt which YAML structure the file uses. Only v2 is supported now, so it's optional. |
+| `profile` | string | — | Links the project to a connection profile in `profiles.yml`, i.e. which warehouse and credentials to use. Overridable with `--profile`. |
+| `model-paths` | list | `["models"]` | Tells dbt where to find models, sources and unit tests. Change it if your team uses a different folder name. |
+| `seed-paths` | list | `["seeds"]` | Tells dbt where your seed CSV files live so `dbt seed` can load them. |
+| `test-paths` | list | `["tests"]` | Where singular tests and custom generic tests (`tests/generic`) are found. |
+| `analysis-paths` | list | none (init sets `analyses`) | Folder of analyses: SQL that dbt compiles (with `ref()` etc.) but never materializes. Useful for ad-hoc queries under version control. |
+| `macro-paths` | list | `["macros"]` | Where reusable Jinja macros live. Can't be the same folder as models. |
+| `snapshot-paths` | list | `["snapshots"]` | Where snapshot definitions (history tracking of changing data) live. |
+| `docs-paths` | list | all resource paths | Limits where dbt searches for `{% docs %}` blocks used in documentation. Usually left unset. |
+| `asset-paths` | list | `[]` | Files (e.g. images) copied into `target/` during `dbt docs generate` so they render in your project docs. |
+| `function-paths` | list | `["functions"]` | Where user-defined functions (UDFs) are stored. |
+| `osi-paths` | list | `["OSI"]` | Where Ossie semantic-layer documents are stored (dbt v1.12+). |
+| `check-paths` | list | `["checks"]` | Where project checks are stored (dbt v2). |
+| `skill-paths` | list | `["skills"]` | Where agent skills (folders with a `SKILL.md`) are found, in your project and installed packages. |
+| `packages-install-path` | string | `dbt_packages` | Chooses the folder `dbt deps` installs packages into. Usually git-ignored. |
+| `clean-targets` | list | `target-path` contents | Lists the generated folders `dbt clean` deletes (e.g. `target`, `dbt_packages`, `logs`). Only list artifacts, never source code. |
+| `query-comment` | string / dict | JSON metadata comment | Adds a comment to every query dbt runs, so you can trace warehouse queries back to dbt models, users or runs (cost attribution, debugging). |
+| `quoting` | dict | adapter-dependent | Controls whether dbt wraps database/schema/identifier names in quotes. Matters for case sensitivity (esp. Snowflake, Redshift) and reserved words. |
+| `require-dbt-version` | string / list | none (no check) | Restricts which dbt versions can run the project, keeping teams and packages compatible. Also signals dbt v2 support. |
+| `dispatch` | list of dicts | root project first | Sets the search order for macro implementations by package, letting you override or shim package macros (e.g. `dbt_utils`). |
+| `on-run-start` / `on-run-end` | string / list | none | Project-wide hooks: SQL or macros run at the start or end of commands like `dbt run` or `dbt build` (e.g. grants, audit logging). |
+| `dbt-cloud` | dict | — | Maps the local project to a dbt platform project (`project-id`, optional `defer-env-id`, `account_id`, `account-host`) for the platform CLI, IDE and deferral. |
