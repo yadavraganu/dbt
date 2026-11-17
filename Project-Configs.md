@@ -11,9 +11,6 @@
 9. [Companion files: `.dbtignore` and `dbt_cloud.yml`](#9-companion-files)
 10. [A complete, realistic example](#10-a-complete-realistic-example)
 11. [Cheat sheet (all keys at a glance)](#11-cheat-sheet)
-12. [Common errors & troubleshooting](#12-common-errors--troubleshooting)
-13. [Best practices](#13-best-practices)
-14. [Self-test & practice exercises](#14-self-test--practice-exercises)
 
 ## 1. The big picture
 
